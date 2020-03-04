@@ -34,6 +34,10 @@ public abstract class Bot extends TelegramLongPollingBot {
         }
     }
 
+    public Message stopBot(Message messageFrom, String text) {
+        
+    }
+
     protected abstract void processTheException(Exception e);
 
     @Override

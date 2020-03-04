@@ -26,6 +26,16 @@ public final class HelloWorldBot extends Bot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        sendTextMessage(update.getMessage(), "Hello world!");
+        String messageText = update.getMessage().getText();
+        
+        if(messageText.Equals("/start")) {
+            sendTextMessage(update.getMessage(), "What do you want, bag with bones");
+        } else if(messageText.Equals("/kill")) {
+            sendTextMessage(update.getMessage(), "Goodbye, cruel world");
+        } else {
+            sendTextMessage(update.getMessage(), "I don't know what you're writing to me.\n
+            But I definitely know your name is Kyrylo")
+        }
+        //sendTextMessage(update.getMessage(), "Hello world!");
     }
 }
