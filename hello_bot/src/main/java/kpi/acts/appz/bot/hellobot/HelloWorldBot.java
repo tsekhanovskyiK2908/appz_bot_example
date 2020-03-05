@@ -24,17 +24,19 @@ public final class HelloWorldBot extends Bot {
         System.out.println(e.toString());
     }
 
+
+
     @Override
     public void onUpdateReceived(Update update) {
         String messageText = update.getMessage().getText();
-        
-        if(messageText.Equals("/start")) {
-            sendTextMessage(update.getMessage(), "What do you want, bag with bones");
-        } else if(messageText.Equals("/kill")) {
+
+        if(messageText.equals("/start")) {
+            sendTextMessage(update.getMessage(), "What do you want, bag with bones?");
+        } else if(messageText.equals("/kill")) {
             sendTextMessage(update.getMessage(), "Goodbye, cruel world");
+            botStop();
         } else {
-            sendTextMessage(update.getMessage(), "I don't know what you're writing to me.\n
-            But I definitely know your name is Kyrylo")
+            sendTextMessage(update.getMessage(), "I don't know what you're writing to me.\nBut I definitely know your name is Kyrylo");
         }
         //sendTextMessage(update.getMessage(), "Hello world!");
     }

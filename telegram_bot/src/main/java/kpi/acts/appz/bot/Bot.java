@@ -5,10 +5,11 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.generics.BotSession;
 
 public abstract class Bot extends TelegramLongPollingBot {
     private final String token, botName;
-
+    private static BotSession botSession = null ;
     protected Bot(String token, String botName){
         this.token = token;
         this.botName = botName;
@@ -16,9 +17,13 @@ public abstract class Bot extends TelegramLongPollingBot {
 
     public static void runBot(Bot newBot) {
         try {
-            new TelegramBotsApi().registerBot(newBot);
+            botSession =  new TelegramBotsApi().registerBot(newBot);
         } catch (TelegramApiException e) {
             newBot.processTheException(e);
+        } finally {
+            if(botSession!= null) {
+                botSession.stop();
+            }
         }
     }
 
@@ -34,11 +39,11 @@ public abstract class Bot extends TelegramLongPollingBot {
         }
     }
 
-    public Message stopBot(Message messageFrom, String text) {
-        
+    public void botStop() {
+        botSession.stop();
     }
 
-    protected abstract void processTheException(Exception e);
+   protected abstract void processTheException(Exception e);
 
     @Override
     public final String getBotUsername() {
