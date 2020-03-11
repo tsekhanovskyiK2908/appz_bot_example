@@ -9,7 +9,9 @@ import org.telegram.telegrambots.meta.generics.BotSession;
 
 public abstract class Bot extends TelegramLongPollingBot {
     private final String token, botName;
-    private static BotSession botSession = null ;
+    private static BotSession botSession = null;
+    protected static boolean botIsRunning;
+
     protected Bot(String token, String botName){
         this.token = token;
         this.botName = botName;
@@ -18,13 +20,11 @@ public abstract class Bot extends TelegramLongPollingBot {
     public static void runBot(Bot newBot) {
         try {
             botSession =  new TelegramBotsApi().registerBot(newBot);
+            botIsRunning = botSession.isRunning();
         } catch (TelegramApiException e) {
             newBot.processTheException(e);
-        } finally {
-            if(botSession!= null) {
-                botSession.stop();
-            }
         }
+
     }
 
     public Message sendTextMessage(Message messageFrom, String text){
@@ -39,8 +39,14 @@ public abstract class Bot extends TelegramLongPollingBot {
         }
     }
 
-    public void botStop() {
+    protected void botStop() {
         botSession.stop();
+        botIsRunning = botSession.isRunning();
+    }
+
+    protected void botRestart() {
+        botSession.start();
+        botIsRunning = botSession.isRunning();
     }
 
    protected abstract void processTheException(Exception e);

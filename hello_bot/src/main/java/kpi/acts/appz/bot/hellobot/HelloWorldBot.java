@@ -8,7 +8,8 @@ public final class HelloWorldBot extends Bot {
     public static void main(String[] args){
         if(args == null || args.length != 2){
             System.out.println("You must run bot with 2 args - BotToken and bot UserName");
-        } else {
+        }
+        else {
             ApiContextInitializer.init();
             Bot.runBot(new HelloWorldBot(args[0], args[1]));
         }
@@ -31,6 +32,10 @@ public final class HelloWorldBot extends Bot {
         String messageText = update.getMessage().getText();
 
         if(messageText.equals("/start")) {
+            if(!botIsRunning) {
+                botRestart();
+            }
+
             sendTextMessage(update.getMessage(), "What do you want, bag with bones?");
         } else if(messageText.equals("/kill")) {
             sendTextMessage(update.getMessage(), "Goodbye, cruel world");
