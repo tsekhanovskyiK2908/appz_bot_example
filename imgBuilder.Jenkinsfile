@@ -10,5 +10,6 @@ node('docker'){
 	stage('push'){
         docker.withRegistry('https://index.docker.io/v1/', 'dockerhubcreds'){
 			dockerImage.push();
+        }
 	}
 }
