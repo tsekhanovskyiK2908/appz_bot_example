@@ -40,6 +40,8 @@ public final class HelloWorldBot extends Bot {
         } else if(messageText.equals("/kill")) {
             sendTextMessage(update.getMessage(), "Goodbye, cruel world");
             botStop();
+        } else if(messageText.equals("/ok")){
+            sendTextMessage(update.getMessage(), "Let it be");
         } else {
             sendTextMessage(update.getMessage(), "I don't know what you're writing to me.\nBut I definitely know your name is Kyrylo");
         }
